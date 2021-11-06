@@ -5,31 +5,34 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class PistolScript : MonoBehaviour
 {
+    [Header("Pistol Stats")]
+    public float shotPower = 2500f; //Affects how fast bullet travels
+    public float lifeSpan = 3f; //Determines how long bullet travels before deleting itself
+    public float firerate = 2f; //Determines fire rate based in miliseconds
+
+    [Header("Unity Values")]
     public List<XRController> controllers = null; //List that stores active XR Controllers
     public InputHelpers.Button trigger; //Stores which button should activate pistol
     public GameObject bulletPrefab; //Store prefab bullet
     public Transform muzzleLocation; //Store coordinates of barrel location (where bullet should spawn)
-    public float shotPower = 2500; //Affects how fast bullet travels
-    public float lifeSpan = 3; //Determines how long bullet travels before deleting itself
-    public float firerate = 25; //Determines fire rate based in miliseconds
 
-    private float cooldown;
+    private float fireCooldown = 0f;
 
     private void Start()
     {
-        cooldown = firerate * Time.deltaTime;
+
     }
     void Update()
     {
-        if (CanShoot() == true && cooldown <= 0)
+        if (CanShoot() == true && fireCooldown <= 0)
         {
             Shoot();
-            cooldown = firerate * Time.deltaTime;
+            fireCooldown = 1f/firerate;
         }
 
-        if (cooldown > 0)
+        if (fireCooldown > 0)
         {
-            cooldown -= Time.deltaTime;
+            fireCooldown -= Time.deltaTime;
         }
     }
 

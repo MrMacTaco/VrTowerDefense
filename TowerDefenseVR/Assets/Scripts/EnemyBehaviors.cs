@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class EnemyBehaviors : MonoBehaviour
 {
+    [Header("Enemy Stats")]
+    public float hp = 3; //Set enemy health
+    public float speed = 10; //Set enemy speed
+
     private Transform waypoint; //Store the next waypoint enemy should travel to
     private int waypointIndex = 0; //Tracks next waypoint in series
-
-    public int hp = 3; //Set enemy health
-    public float speed = 10; //Set enemy speed
 
     private void Start()
     {
@@ -25,6 +26,11 @@ public class EnemyBehaviors : MonoBehaviour
         {
             GetNextWaypoint();
         }
+
+        if (hp <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
     private void GetNextWaypoint()
     {    
@@ -37,6 +43,7 @@ public class EnemyBehaviors : MonoBehaviour
         waypoint = WaypointCollection.waypoints[waypointIndex];
     }
 
+    //Old function for taking damage, still works with pistol, keep this until I rework pistol
     private void OnTriggerEnter(Collider other)
     { 
         //Subtract health on bullet hit
