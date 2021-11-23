@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaypointCollection : MonoBehaviour
 {
     public static Transform[] waypoints;
+    public static GameObject player;
 
     private void Awake()
     {
@@ -13,6 +14,6 @@ public class WaypointCollection : MonoBehaviour
         {
             waypoints[i] = transform.GetChild(i);
         }
-        
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 }

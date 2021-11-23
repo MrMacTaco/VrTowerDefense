@@ -44,15 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b476a658d04982241853b95e7bf0ba12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shotPower: 2500
+  lifeSpan: 3
+  firerate: 25
   controllers:
   - {fileID: 0}
   - {fileID: 0}
   trigger: 0
   bulletPrefab: {fileID: 0}
   muzzleLocation: {fileID: 0}
-  shotPower: 2500
-  lifeSpan: 3
-  firerate: 25
 --- !u!1 &4344377922924223440
 GameObject:
   m_ObjectHideFlags: 0
