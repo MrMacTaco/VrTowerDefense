@@ -12,8 +12,9 @@ public class WaveSpawner : MonoBehaviour
     private float enemyGapTime = 0.5f; //Stores amount of time in seconds that Unity should wait to spawn next enemy in wave
     private float countdownTimer = 2.0f; //Acts as a timer for starting the next wave
 
-    private int waveNumber = 0;
+    public static int waveNumber = 0; //Tracks which wave player is on
 
+    /* Wave spawn no longer just time based, so this update function is depricated
     void Update()
     {
         if (countdownTimer <= 0)
@@ -22,7 +23,7 @@ public class WaveSpawner : MonoBehaviour
             countdownTimer = waveTimer;
         }
         countdownTimer -= Time.deltaTime;
-    }
+    }*/
 
     /// <summary>
     /// IEnumerator allows use to 'pause' our function using a coroutine. So this function will spawn an enemy when called,
@@ -44,5 +45,10 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy()
     {
         Instantiate(enemyPrefab, spawnLocation.position, spawnLocation.rotation);
+    }
+
+    public void ButtonStartWave()
+    {
+        StartCoroutine(StartWave());
     }
 }

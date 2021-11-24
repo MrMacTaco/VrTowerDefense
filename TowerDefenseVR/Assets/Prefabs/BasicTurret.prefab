@@ -304,7 +304,6 @@ MonoBehaviour:
   firerate: 2
   damage: 1
   shotPower: 50
-  lifeSpan: 3
   enemyTag: Enemy
   pivot: {fileID: 2187824519257081600}
   bulletPrefab: {fileID: 8250314752893234744, guid: f1277e226ab6e064aadc19887a0e46e0, type: 3}
