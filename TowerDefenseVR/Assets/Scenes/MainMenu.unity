@@ -314,7 +314,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Welcome to VR Tower Defense
+  m_Text: Welcome to Wave Breaker VR
 --- !u!222 &34444131
 CanvasRenderer:
   m_ObjectHideFlags: 0

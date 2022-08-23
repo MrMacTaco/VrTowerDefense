@@ -13,6 +13,15 @@ public class ShopManager : MonoBehaviour
             StatsManager.money -= 150;
         }
     }
+    //Upgrade pistol if player has enough money
+    public void UpgradePistolVelocity(PistolScript pistol)
+    {
+        if (StatsManager.money >= 150)
+        {
+            pistol.shotPower += 100;
+            StatsManager.money -= 200;
+        }
+    }
     //Upgrade player's walk speed if they have enough money
     public void UpgradePlayerSpeed(PlayerMovement player)
     {
@@ -22,6 +31,4 @@ public class ShopManager : MonoBehaviour
             StatsManager.money -= 100;
         }
     }
-
-
 }

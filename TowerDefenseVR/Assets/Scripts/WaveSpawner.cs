@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaveSpawner : MonoBehaviour
 {
     public Transform enemyPrefab; //Stores basic enemy prefab
+    public Transform bossPrefab; //Stores basic enemy prefab
 
     public Transform spawnLocation; //Store the starting waypoint's position
 
@@ -13,6 +14,8 @@ public class WaveSpawner : MonoBehaviour
     private float countdownTimer = 2.0f; //Acts as a timer for starting the next wave
 
     public static int waveNumber = 0; //Tracks which wave player is on
+
+    int[] waveValue = new int[10] { 10, 15, 20, 30, 30, 35, 35, 40, 45, 5 };
 
     /* Wave spawn no longer just time based, so this update function is depricated
     void Update()
@@ -32,14 +35,23 @@ public class WaveSpawner : MonoBehaviour
     /// </summary>
     IEnumerator StartWave()
     {
+        if (waveNumber > 10)
+        {
+            yield return new WaitForSeconds(enemyGapTime);
+        }
         waveNumber += 1;
 
-        for (int i = 0; i < waveNumber; i++)
+        if (waveNumber == 10)
+        {
+            Instantiate(bossPrefab, spawnLocation.position, spawnLocation.rotation);
+            yield return new WaitForSeconds(enemyGapTime);
+        }
+
+        for (int i = 0; i < waveValue[waveNumber-1]; i++)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(enemyGapTime);
         }
-        
     }
 
     void SpawnEnemy()

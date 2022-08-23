@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyBehaviors : MonoBehaviour
+public class CloneBossChild : MonoBehaviour
 {
     [Header("Enemy Stats")]
     public float hp; //Set enemy health
@@ -17,11 +17,12 @@ public class EnemyBehaviors : MonoBehaviour
 
     private Transform waypoint; //Store the next waypoint enemy should travel to
     private GameObject player; //Stores player's location
-    public int waypointIndex = 0; //Tracks next waypoint in series
-    private float maxHP = 6;
+    private int waypointIndex; //Tracks next waypoint in series
+    private float maxHP = 3;
 
     private void Start()
     {
+        waypointIndex = CloneBoss.waypointIndex;
         waypoint = WaypointCollection.waypoints[waypointIndex]; //Initiates first waypoint location
         player = WaypointCollection.player;
         hp = maxHP;
@@ -47,7 +48,7 @@ public class EnemyBehaviors : MonoBehaviour
         }
     }
     private void GetNextWaypoint()
-    {   
+    {
         //Condition for when final waypoint is reached
         if (waypointIndex >= WaypointCollection.waypoints.Length - 1)
         {
@@ -61,9 +62,9 @@ public class EnemyBehaviors : MonoBehaviour
 
     //Old function for taking damage, still works with pistol, keep this until I rework pistol
     private void OnTriggerEnter(Collider other)
-    { 
+    {
         //Subtract health on bullet hit
-        if(other.CompareTag("Bullet"))
+        if (other.CompareTag("Bullet"))
         {
             hp -= 1;
             Destroy(other.gameObject);

@@ -3,28 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyBehaviors : MonoBehaviour
+public class CloneBoss : MonoBehaviour
 {
     [Header("Enemy Stats")]
     public float hp; //Set enemy health
-    public float speed = 10; //Set enemy speed
-    public int lifePenality = 1; //Determines how many lives player loses if enemy reaches end
-    public int value = 25; //Set value pl;ayer recieves when destroying enemy
+    public float speed = 3; //Set enemy speed
+    public int lifePenality = 10; //Determines how many lives player loses if enemy reaches end
+    public int value = 500; //Set value pl;ayer recieves when destroying enemy
 
     [Header("Unity Stuff")]
     public Canvas healthBarCanvas;
     public Image healthBar;
+    public GameObject chlidPrefab; //Stores basic enemy prefab
+    public static int waypointIndex = 0; //Tracks next waypoint in series
 
     private Transform waypoint; //Store the next waypoint enemy should travel to
     private GameObject player; //Stores player's location
-    public int waypointIndex = 0; //Tracks next waypoint in series
-    private float maxHP = 6;
+    private float maxHP = 50;
+    private float enemyGapTime = 2.0f; //Stores amount of time in seconds that Unity should wait to spawn next enemy in wave
 
     private void Start()
     {
         waypoint = WaypointCollection.waypoints[waypointIndex]; //Initiates first waypoint location
         player = WaypointCollection.player;
         hp = maxHP;
+        StartCoroutine(StartSpawn());
     }
 
     // Update is called once per frame
@@ -47,7 +50,7 @@ public class EnemyBehaviors : MonoBehaviour
         }
     }
     private void GetNextWaypoint()
-    {   
+    {
         //Condition for when final waypoint is reached
         if (waypointIndex >= WaypointCollection.waypoints.Length - 1)
         {
@@ -61,9 +64,9 @@ public class EnemyBehaviors : MonoBehaviour
 
     //Old function for taking damage, still works with pistol, keep this until I rework pistol
     private void OnTriggerEnter(Collider other)
-    { 
+    {
         //Subtract health on bullet hit
-        if(other.CompareTag("Bullet"))
+        if (other.CompareTag("Bullet"))
         {
             hp -= 1;
             Destroy(other.gameObject);
@@ -82,5 +85,19 @@ public class EnemyBehaviors : MonoBehaviour
     {
         StatsManager.money += value;
         Destroy(this.gameObject);
+    }
+
+    //Spawns enemies at a steady rate
+    IEnumerator StartSpawn()
+    {
+        for (int i = 0; i < 10000; i++)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(enemyGapTime);
+        }
+    }
+    void SpawnEnemy()
+    {
+        Instantiate(chlidPrefab, this.transform.position, this.transform.rotation);
     }
 }
